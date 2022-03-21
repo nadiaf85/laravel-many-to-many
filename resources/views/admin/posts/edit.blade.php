@@ -24,6 +24,20 @@
                         @enderror
                     </div>
 
+                    {{-- Tag del post --}}
+                    <div class="form-group">
+                        <label>Tags</label>
+                        @foreach ($tags as $tag)
+                            <div class="form-check">
+                                <input class="form-check-input" name="tags[]" type="checkbox" 
+                                value="{{$tag->id}}" {{$post->tags->contains($tag) ? "checked" : "" }} id="{{$tag->slug}}">
+                                <label class="form-check-label" for="{{$tag->slug}}">
+                                    {{$tag->title}}
+                                </label>
+                            </div>
+                        @endforeach
+                    </div>
+
                     {{-- Categoria del post --}}
                     <div class="form-group">
                         <label>Categoria</label>

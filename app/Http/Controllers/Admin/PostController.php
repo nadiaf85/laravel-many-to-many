@@ -135,6 +135,8 @@ class PostController extends Controller
         $data_form['slug'] = $slug;
         
         $post->update($data_form);
+        $post->tags()->sync(isset($data_form['tags']) ? $data_form['tags']:[]);
+
         return redirect()->route('admin.posts.index');
     }
 
