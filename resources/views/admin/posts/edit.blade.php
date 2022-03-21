@@ -23,6 +23,8 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
+                    {{-- Categoria del post --}}
                     <div class="form-group">
                         <label>Categoria</label>
                         <select class="form-control form-control-md" name="category_id" id="category_id">

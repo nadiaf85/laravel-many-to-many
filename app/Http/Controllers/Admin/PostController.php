@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Category;
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -15,7 +16,8 @@ class PostController extends Controller
         'title'=>'required|max:150|string',
         'content'=>'required',
         'category_id'=>'nullable|exists:categories,id',
-        'image'=>'nullable|image|mimes:jpeg, bmp, png,jpg|max:2048'
+        'image'=>'nullable|image|mimes:jpeg, bmp, png,jpg|max:2048',
+        'tags'=>'exists:tags,id'
     ];
 
     /**
@@ -38,7 +40,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create',compact('categories'));
+        $tags = Tag::all();
+
+        return view('admin.posts.create',compact('categories','tags'));
     }
 
     /**
@@ -75,6 +79,8 @@ class PostController extends Controller
         
         $newPost->fill($data_form);
         $newPost->save();
+        $newPost->tags()->sync($data_form['tags']);
+
         return redirect()->route('admin.posts.index');
     }
 
@@ -97,8 +103,10 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories= Category::all();
-        return view('admin.posts.edit',compact('post','categories'));
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('admin.posts.edit',compact('post','categories','tags'));
     }
 
     /**

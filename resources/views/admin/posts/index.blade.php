@@ -17,6 +17,7 @@
                             <th scope="col">Contenuto</th>
                             <th scope="col">Slug</th>
                             <th scope="col">Categoria</th>
+                            <th scope="col">Tags</th>
                             <th scope="col">Immagine</th>
                             <th scope="col text-center">Azioni</th>
                         </tr>
@@ -30,6 +31,11 @@
                         <td>{{$post->content}}</td>
                         <td>{{$post->slug}}</td>
                         <td>{{$post->category? $post->category->title : '-'}}</td>
+                        <td>
+                            @foreach ($post->tags as $tag)
+                                {{$tag->title}}
+                            @endforeach
+                        </td>
                         <td> 
                             @if (isset($post->category))
                                 <img style="width: 50px;" src="{{asset("storage/{$post->image}")}}" alt="{{$post->title}}">

@@ -8,6 +8,9 @@
                 <h2>{{$post->title}}</h2>
                 <h4>{{$post->content}}</h4>
                 <p>{{$post->slug}}</p>
+                @foreach ($post->tags as $tag)
+                    {{$tag->title}}
+                @endforeach
                 @if($post->image)
                     <img src="{{asset("storage/{$post->image}")}}" alt="{{$post->title}}">
                 @endif
