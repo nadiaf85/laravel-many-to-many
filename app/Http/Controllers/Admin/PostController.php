@@ -81,7 +81,10 @@ class PostController extends Controller
         
         $newPost->fill($data_form);
         $newPost->save();
-        $newPost->tags()->sync($data_form['tags']);
+
+        if(isset($form_data['tags'])){
+            $newPost->tags()->sync($form_data['tags']);
+        }
 
         return redirect()->route('admin.posts.index');
     }
@@ -137,7 +140,7 @@ class PostController extends Controller
         $data_form['slug'] = $slug;
         
         $post->update($data_form);
-        $post->tags()->sync(isset($data_form['tags']) ? $data_form['tags']:[]);
+        $post->tags()->sync(isset($data_form['tags']) ? $data_form['tags']:[]); //se tags è settato prendo quel tag,se non è settato restituisce un array vuoto
 
         return redirect()->route('admin.posts.index');
     }
